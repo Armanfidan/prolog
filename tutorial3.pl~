@@ -1,0 +1,21 @@
+%woman & burns -> witch
+%wood -> burns
+%floats -> wood
+%X floats & weight(X) == weight(Y), Y floats
+
+op(700, xfy, <->).
+op(650, xfy, ->).
+op(600, xfy, +).
+op(500, xfy, &).
+op(40, fy, -).
+
+true(1).
+true(-P) :- false(P).
+true(P->Q) :- true(P), !.
+true(P->Q) :- true(Q).
+true(P&Q) :- true(P), true(Q).
+
+false(0).
+false(-P) :- true(P).
+false(P->Q) :- true(P), false(Q).
+

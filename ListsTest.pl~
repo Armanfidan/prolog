@@ -1,0 +1,8 @@
+reverse([], Z, Z).
+reverse([H|X], Y, Z) :- reverse(X, [H|Y], Z).
+
+reverse2([], Y, Y).
+reverse2([H|X], Y, [Z|H]) :- reverse2(X, Y, Z).
+
+append([], Y, Y).
+append([H|X], Y, [H|Z]) :- append(X, Y, Z).

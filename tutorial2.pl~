@@ -1,0 +1,33 @@
+state_change(fill_7, (F, S), (F, 7)) :- S < 7.
+state_change(fill_5, (F, S), (5, S)) :- F < 5.
+state_change(empty_7, (F, S), (F, 0)) :- S > 0.
+state_change(empty_5, (F, S), (0, S)) :- F > 0.
+state_change(pour_7_to_5, (F, S), (5, R)) :-
+    Total is F + S,
+    Total > 5,
+    R is Total - 5.
+state_change(pour_7_to_5, (F, S), (Total, 0)) :-
+    Total is F + S,
+    Total =< 5.
+state_change(pour_5_to_7, (F, S), (5, R)) :-
+    Total is F + S,
+    Total > 7,
+    R is Total - 7.
+state_change(pour_5_to_7, (F, S), (Total, 0)) :-
+    Total is F + S,
+    Total =< 7.
+
+start_state((0, 0)).
+end_state((_, 4)).
+
+%GGSE
+search(Graph, [Node|Path]) :-
+    choose([Node|Path], Graph, _),
+    state_of(Node, State),
+    goal_state(State).
+search(Graph, SolutionPath) :-
+    choose(Path, Graph, OtherPaths),
+    one_step_extensions(Path, NewPaths),
+    add_to_paths(NewPaths, OtherPaths, GraphPlus),
+    search(GraphPlus, SolutionPath).
+
