@@ -102,7 +102,14 @@ intersection_([H1|T1], S2, [H1|Out]) :-
     intersection_(T1, S2, Out).
 intersection_([_|T1], S2, Out) :- intersection_(T1, S2, Out).
 
-union_(S1, S2, Out)
+select2([H|T], (H, Other)) :-
+    select1(T, Other).
+select2([_|T], Pair) :-
+    select2(T, Pair).
+
+select1([H|_], H).
+select1([_|T], H) :-
+    select1(T, H).
 
 
 

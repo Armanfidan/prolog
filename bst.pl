@@ -39,6 +39,27 @@ delete(K, [K1, L1, R1], [K1, L1, Rnew]) :-
 delete(K, [K1, L1, R1], [K1, Lnew, R1]) :-
     delete(K, L1, Lnew).
 
+
+delete2(_, [], []).
+delete2(K, [K, [], []], []) :- !.
+delete2(K, [K, L, []], L) :- !.
+delete2(K, [K, [], R], R) :- !.
+
+delete2(K, [K, L1, R1], [NK, L1, Rnew]) :-
+    inorder_successor(R1, NK),
+    delete(NK, R1, Rnew).
+
+delete2(K, [K1, L1, R1], [K1, Lnew, R1]) :-
+    K @< K1, !,
+    delete2(K, L1, Lnew).
+
+delete2(K, [K1, L1, R1], [K1, L1, Rnew]) :-
+    delete2(K, R1, Rnew).
+
+inorder_successor([NK, [], _], NK) :- !.
+inorder_successor([_, L1, _], NK) :-
+    inorder_successor(L1, NK).
+
 % Find leftmost node of a tree.
 leftmost([K, [], _], K) :- !.
 leftmost([_, L, _], K) :-
